@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1519849563 source:c:\users\mark\documents\cosc2430\hw1\main.cpp
+	"ArgumentManager.h"
+	<fstream>
+	<iterator>
+	<cstring>
+	<iomanip>
+	<iostream>
+	<cstdlib>
+	<string>
+	<sstream>
+
+1519761861 c:\users\mark\documents\cosc2430\hw1\argumentmanager.h
+	<map>
+	<string>
+	<iostream>
+	<sstream>
+
+1519769651 source:c:\users\mark\documents\cosc2430\hw1\simplelinkedlist.cpp
+	<iostream>
+	<cstdlib>
+
+1519769651 c:\users\mark\documents\cosc2430\hw1\simplelinkedlist.cpp
+	<iostream>
+	<cstdlib>
+

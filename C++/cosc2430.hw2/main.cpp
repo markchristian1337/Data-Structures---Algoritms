@@ -1,0 +1,381 @@
+//Program for converting infix expression to postfix.
+
+//Below are libraries that allow me to do basic and advance operations
+//in c++
+
+//iostream is for inputting and outputting
+#include <iostream>
+//iomanip library is for input/output, and also
+//for using setprecision
+#include <iomanip>
+//cmath library is for making common mathematical
+//operations etc.
+#include <cmath>
+//cstring would be for manipulating
+//strings and arrays
+#include <cstring>
+#include <string>
+//cstdlib is for standard general utility purposes
+// like integer arithmetic, searching, converting etc.
+#include <cstdlib>
+//fstream is for input/output with regards to files
+#include <fstream>
+//ctype.h is for functions like isalnum, and isalpha etc.
+#include <ctype.h>
+//including the argument manager header file so I can use
+//the argument manager for command line argumentss
+#include "ArgumentManager.h"
+//definning the operatiors that will be in use
+#define OPERATORS 12
+
+//typical standard practice using namespace std library below for cout
+//cin instead ommiting would equal ios:: type stuff
+using namespace std;
+//this is a basic node structure for data and a link to the the next node
+struct node{
+
+    double data;
+
+    struct node *next;
+};
+//creating a pointer called top
+//that is of type node.
+//setting it equal to zero
+struct node *top = NULL;
+
+/* operators and their precedence down below in a vector */
+char precedence[OPERATORS][2] = {{'(', 0},{'[',0},{'{',0}, {'+', 1}, {'-', 2},
+{'*', 3}, {'/', 4}, {'%', 4}, {'^', 5}, {')', 6}, {']',6},{'}',6}};
+//this just creates a pointer of node type and passes a parameter to it
+struct node *createNode(int data)
+{
+    struct node *ptr = (struct node *)malloc(sizeof(struct node));
+    ptr->data = data;   //pointer points to data and puts in the given data
+    ptr->next = NULL;   //pointer that points to the next node link(next) is set to null
+}
+// This is the pop function for stack
+//aka this is just like remove for the stack pop top element from the stack
+int pop()
+{
+    //ptr is a pointer of type node
+    struct node *ptr;
+    int data;   //creating variable called data of type int
+    if (top == NULL)    //if top is equal to NULL return -1
+        return -1;
+
+        ptr = top;
+    //setting top to equal the next node link
+    top = top->next;
+    data = ptr->data;   //setting data to equal ptr's pointing
+    //to the next node's data field
+    free(ptr);
+    return (data);
+}
+//isEmpty function for checking if it
+//the contents of the stack are empty
+bool isEmpty()
+{
+    return top == NULL;
+}
+//this fucntion will get the precedence of the index of the operator
+//from the array
+int getIndex(int data)
+{
+    int i;
+    for (i = 0; i < OPERATORS; i++)
+    {   if (data == precedence[i][0])
+            return i;
+   }
+}
+//this is the push function aka inserting into
+//the stack function. Or this pushes operands,
+//and operators to the stack
+void push(int data){
+    struct node *ptr = createNode(data);
+    if (top == NULL)
+    {
+        top = ptr;
+
+        return;
+    }
+
+    ptr->next = top;
+
+    top = ptr;
+}
+//this is the infix to postfix function
+//where when given the infix expression
+//it will be taken and manipulated
+//or turned into a proper postfix
+//expression
+
+
+string InfixToPostfix(string infix){
+    //creating a string and making it set to empty or null
+    string postfix ="";
+//these are the variables and
+//..there declarations
+    int i = 0;
+    int j=0;
+    int k=0;
+    int l=0;
+    int data;
+    //float checkParentheses
+    int parenCheck;
+    int index1;
+    int index2;
+    //int indexing;
+    //int currentPlace
+
+
+
+    for (i = 0; i < infix.length(); i++)
+    {
+        if(infix[i]==' ')
+            continue;
+        if (tolower(infix[i]) >= '0' && tolower(infix[i] <= '9'))
+        {
+            postfix += infix[i];
+            if(tolower(infix[i+1] == ' '))
+                postfix += ' ';
+
+            }
+        else if (infix[i] == ')')
+        {   data = pop();
+            while (data != '(' && data != -1)
+            {   postfix += data;
+                postfix+= ' ';
+                data = pop();}
+        }
+        else if (infix[i] == ']')
+        {    data = pop();
+            while (data != '[' && data != -1)
+            {    postfix += data;
+                postfix+= ' ';
+                data = pop();
+            }
+        }
+        else if (infix[i] == '}')
+        {    data = pop();
+            while (data != '{' && data != -1)
+            {    postfix += data;
+                postfix+= ' ';
+                data = pop();
+            }
+        }
+        else if (infix[i] == '(')
+        {   push(infix[i]);}
+        else if (infix[i] == '[')
+        {    push(infix[i]);}
+        else if (infix[i] == '{')
+        {    push(infix[i]);}
+        else
+        {
+            data = pop();
+            if (data == -1)
+            {
+                push(infix[i]);
+                continue;
+                }
+            else if (data == '(')
+            {
+                push(data);
+                push(infix[i]);
+                continue;
+                }
+
+            index1 = getIndex(data);
+            index2 = getIndex(infix[i]);
+            while (precedence[index1][1] >= precedence[index2][1])
+            {
+                postfix += data;
+                postfix+= ' ';
+                data = pop();
+                if (data == -1)
+                {   push(infix[i]);
+                    break;
+                    }
+                else if (data == '(')
+                {   push(data);
+                    push(infix[i]);
+                    data = -1;
+                    break;
+                    }
+                index1 = getIndex(data);
+            }
+            if (data != -1)
+            {   push(data);
+                push(infix[i]);}
+        }
+    }
+    while(1)
+    {
+        if ((data = pop()) == -1)
+        break;
+        postfix += data;
+        postfix+= ' ';
+    }
+
+    for (k = 0; k < postfix.length(); k++)
+    {
+
+        if (postfix[k] == '('||postfix[k] == ')'||postfix[k] == '{'||postfix[k] == '}'||postfix[k] == '['||postfix[k] == ']')
+
+		postfix = "";
+    }
+	for(i=0;i<infix.length(); i++)
+    {
+		if(isdigit(infix[i]))
+			if(isdigit(infix[i-2]))
+				postfix="";
+	}
+
+    return postfix;
+}
+//this function is for evaluating once in postfix order
+double EvalPostfix(string str){
+
+    top=NULL;
+
+    double i,data = -1, operand1, operand2, result;
+
+    for (i = 0; i < str.length(); i++){
+
+        if (isdigit(str[i])){
+
+            data = (data == -1) ? 0 : data;
+
+            data = (data * 10) + (str[i] - 48);
+
+            continue;
+        }
+
+        if (data != -1){
+
+            push(data);
+
+        }
+
+        if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '^'){
+
+            operand2 = pop();
+
+            operand1 = pop();
+
+            if (operand1 == -1 || operand2 == -1)
+
+                break;
+
+            switch (str[i]){
+
+                case '+':
+
+                result = operand1 + operand2;
+
+                push(result);
+
+                break;
+
+                case '-':
+
+                result = operand1 - operand2;
+
+                push(result);
+
+                break;
+
+                case '*':
+
+                result = operand1 * operand2;
+
+                push(result);
+
+                break;
+
+                case '/':
+
+                result = operand1 / operand2;
+
+                push(result);
+
+                break;
+
+                case '^':
+
+                result = pow(operand1, operand2);
+
+                push(result);
+
+                break;
+
+            }
+        }
+        data = -1;
+    }
+    if (top != NULL && top->next == NULL)
+        return top->data;
+}
+//this is main function where everything
+//also in the main is where the argument manager
+int main(int argc, char *argv[])
+{
+    if(argc < 2)
+    {
+        cout << "Usage: main \"A=<file>;C=<file>\""<<endl;
+        return 1;
+    }
+    ArgumentManager am(argc, argv);
+    am.parse(argc, argv);
+    string inputFilename = am.get("A");
+    string outputFilename = am.get("C");
+
+    ifstream in(inputFilename);
+    ofstream ofs(outputFilename);
+    string output, str, str2;
+
+
+
+	if(in.is_open())
+    {
+		//while(!in.eof())
+		int counter = 0;
+		//{
+			getline(in, str2);
+
+            char c[str2.length()+1];
+            strcpy(c, str2.c_str());
+            for(int i=0;i<str2.length();i++)
+            {
+                //cout<<c[i];
+                if(c[i]=='(' || c[i]=='{' || c[i]=='[' )
+                    counter++;
+                if(c[i]==')' || c[i]=='}' || c[i]==']' )
+                    counter--;
+            }
+            //cout<<endl<<counter;
+            if (counter!=0)
+                ofs.close();
+		//}
+			cout<<str2<<endl;
+			in.clear();
+			in.seekg(0, in.beg);
+			while(!in.eof()){
+                getline(in, str);
+                cout<<str<<endl;
+                output = InfixToPostfix(str);
+                cout<<output<<endl;
+                if(output == "")
+                {   ofs.close();}
+                else
+                {
+                ofs << fixed << setprecision(2);
+                ofs << output << endl;
+                ofs <<EvalPostfix(output);
+                }
+			}
+	}
+    in.close();
+    ofs.close();
+    return 0;
+}
+

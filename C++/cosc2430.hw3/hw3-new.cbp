@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="hw3-new" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/hw3-new" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters='&quot;A=1.txt;B=1k.txt;C=1.out&quot; ' />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/hw3-new" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="1.ans" />
+		<Unit filename="1.out" />
+		<Unit filename="1.txt" />
+		<Unit filename="1k.txt" />
+		<Unit filename="2.ans" />
+		<Unit filename="2k.txt" />
+		<Unit filename="3.ans" />
+		<Unit filename="3k.txt" />
+		<Unit filename="4.ans" />
+		<Unit filename="4k.txt" />
+		<Unit filename="5.ans" />
+		<Unit filename="5k.txt" />
+		<Unit filename="6.ans" />
+		<Unit filename="6k.txt" />
+		<Unit filename="7.ans" />
+		<Unit filename="7k.txt" />
+		<Unit filename="8.ans" />
+		<Unit filename="8k.txt" />
+		<Unit filename="ArgumentManager.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

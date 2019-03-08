@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1523673452 source:c:\users\markc\documents\cosc2430\hw3-new\main.cpp
+	<iostream>
+	"student.h"
+	"arrayList.h"
+	"AVLtree.h"
+	"ArgumentManager.h"
+	<string.h>
+	<fstream>
+
+1523673488 c:\users\markc\documents\cosc2430\hw3-new\student.h
+	<iostream>
+	"date.h"
+	<cstdio>
+	<string>
+
+1523673390 c:\users\markc\documents\cosc2430\hw3-new\date.h
+	<string.h>
+	<iostream>
+
+1523669949 c:\users\markc\documents\cosc2430\hw3-new\arraylist.h
+	<iostream>
+	<cassert>
+
+1523669652 c:\users\markc\documents\cosc2430\hw3-new\avltree.h
+	<iostream>
+	"linkedList.h"
+
+1523669686 c:\users\markc\documents\cosc2430\hw3-new\linkedlist.h
+	<iostream>
+	<cstdlib>
+
+1523669598 c:\users\markc\documents\cosc2430\hw3-new\argumentmanager.h
+	<map>
+	<string>
+	<iostream>
+	<sstream>
+
